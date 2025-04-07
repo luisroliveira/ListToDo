@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TelaLista">
+
+    <View
+        android:id="@+id/containerCabecalho"
+        style="@style/Cabecalho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textCabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Tarefas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/containerCabecalho"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/minhaRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        app:layout_constraintTop_toBottomOf="@id/containerCabecalho"
+        app:layout_constraintBottom_toTopOf="@id/containerNavbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"/>
+
+    <View
+        android:id="@+id/containerNavbar"
+        style="@style/NavBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iconeCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_check"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintStart_toStartOf="@+id/containerNavbar"
+        />
+
+    <ImageView
+        android:id="@+id/iconeAdd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_add"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iconePerfil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_user"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintEnd_toEndOf="@+id/containerNavbar"
+        />
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

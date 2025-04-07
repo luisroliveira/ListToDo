@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.content.Intent
 import android.util.Log
 import android.graphics.Color
 import android.os.Bundle
@@ -55,6 +56,8 @@ class FormCadastro : AppCompatActivity() {
                     snackbar.setBackgroundTint(Color.GREEN)
                     snackbar.setTextColor(Color.BLACK)
                     snackbar.show()
+
+                    telaLogin()
                 } else {
                     val stringErro: String = try {
                         throw task.exception!!
@@ -74,6 +77,12 @@ class FormCadastro : AppCompatActivity() {
                     snackbar.show()
                 }
             }
+    }
+
+    private fun telaLogin() {
+        val intent = Intent(this, FormLogin::class.java)
+        startActivity(intent)
+        finish() // opcional, para não voltar à tela de login com o botão "voltar"
     }
 
     private fun salvarDadosUsuario(nome: String) {

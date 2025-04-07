@@ -3,6 +3,7 @@ package com.example.todolist
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -17,6 +18,9 @@ class TelaPrincipal : AppCompatActivity() {
     private lateinit var email_user: TextView
     private lateinit var nome_user: TextView
     private lateinit var bt_deslogar: Button
+    private lateinit var icon_user: ImageView
+    private lateinit var icon_add: ImageView
+    private lateinit var icon_lista: ImageView
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var usuarioId: String
@@ -56,11 +60,44 @@ class TelaPrincipal : AppCompatActivity() {
                 }
             )
         }
+
+        icon_user.setOnClickListener {
+            telaPrincipal()
+        }
+
+        icon_lista.setOnClickListener{
+            telaLista()
+        }
+
+        icon_add.setOnClickListener {
+            telaNovaTarefa()
+        }
+    }
+
+    private fun telaPrincipal() {
+//        val intent = Intent(this, TelaPrincipal::class.java)
+//        startActivity(intent)
+//        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+    }
+
+    private fun telaLista() {
+        val intent = Intent(this, TelaLista::class.java)
+        startActivity(intent)
+        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+    }
+
+    private fun telaNovaTarefa() {
+//        val intent = Intent(this, TelaPrincipal::class.java)
+//        startActivity(intent)
+//        finish() // opcional, para não voltar à tela de login com o botão "voltar"
     }
 
     private fun iniciarComponentes() {
         email_user = findViewById(R.id.textEmailUser)
         nome_user = findViewById(R.id.textNomeUser)
         bt_deslogar = findViewById(R.id.bt_deslogar)
+        icon_lista = findViewById(R.id.iconeCheck)
+        icon_add = findViewById(R.id.iconeAdd)
+        icon_user = findViewById(R.id.iconePerfil)
     }
 }

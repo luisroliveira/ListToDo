@@ -5,18 +5,39 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
     tools:context=".TelaPrincipal">
+
+    <View
+        android:id="@+id/containerCabecalho"
+        style="@style/Cabecalho"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/textCabecalho"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="25sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:text="Meu perfil"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/containerCabecalho"
+        />
 
     <View
         android:id="@+id/containerUser"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:background="@drawable/container_user"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/containerCabecalho" />
 
     <ImageView
         android:layout_width="100dp"
@@ -77,19 +98,60 @@
         app:layout_constraintTop_toBottomOf="@id/iconeUser"
         app:layout_constraintStart_toEndOf="@id/iconeEmail"
         />
-    
-    <Button
+
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/bt_deslogar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black"
+        style="@style/Button"
         android:text="Deslogar"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textAllCaps="false"
-        android:padding="20sp"
-        android:layout_margin="20sp"
-        app:layout_constraintTop_toBottomOf="@id/textEmailUser"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/containerNavbar"
+        app:layout_constraintBottom_toBottomOf="@id/textEmailUser"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <View
+        android:id="@+id/containerNavbar"
+        style="@style/NavBar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iconeCheck"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_check"
+        android:layout_marginStart="30dp"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintStart_toStartOf="@+id/containerNavbar"
+        />
+
+    <ImageView
+        android:id="@+id/iconeAdd"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_add"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/iconePerfil"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@drawable/ic_user"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="10dp"
+        app:tint="@color/gray"
+        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
+        app:layout_constraintEnd_toEndOf="@+id/containerNavbar"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

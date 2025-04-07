@@ -59,7 +59,7 @@ class FormLogin : AppCompatActivity() {
                     progress_bar.visibility = View.VISIBLE
 
                     Handler(Looper.getMainLooper()).postDelayed({
-                        telaPrincipal()
+                        telaLista()
                     }, 3000)
                 } else {
                     val snackbar = Snackbar.make(view, "Erro ao fazer login", Snackbar.LENGTH_SHORT)
@@ -76,7 +76,7 @@ class FormLogin : AppCompatActivity() {
         val usuarioAtual = FirebaseAuth.getInstance().currentUser
 
         if (usuarioAtual != null) {
-            telaPrincipal()
+            telaLista()
         }
     }
 
@@ -92,7 +92,11 @@ class FormLogin : AppCompatActivity() {
         super.onDestroy()
     }
 
-
+    private fun telaLista() {
+        val intent = Intent(this, TelaLista::class.java)
+        startActivity(intent)
+        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+    }
 
     private fun telaPrincipal() {
         val intent = Intent(this, TelaPrincipal::class.java)
