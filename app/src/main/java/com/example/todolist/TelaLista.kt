@@ -2,15 +2,15 @@ package com.example.todolist
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
 import android.widget.ImageView
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import java.text.SimpleDateFormat
+import java.util.*
 
 class TelaLista : AppCompatActivity() {
 
@@ -18,36 +18,30 @@ class TelaLista : AppCompatActivity() {
     private lateinit var icon_add: ImageView
     private lateinit var icon_lista: ImageView
 
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tarefaAdapter: TarefaAdapter
+    private val tarefas = mutableListOf<Tarefa>()
+    private val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_lista)
 
         supportActionBar?.hide()
-
         iniciarComponentes()
 
-        val recyclerView = findViewById<RecyclerView>(R.id.minhaRecyclerView)
+        recyclerView = findViewById(R.id.minhaRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
+        tarefaAdapter = TarefaAdapter(tarefas)
+        recyclerView.adapter = tarefaAdapter
 
-        val tarefas = listOf(
-            Tarefa("Estudar Android", "06/04/2025", false),
-            Tarefa("Revisar projeto", "07/04/2025", true),
-            Tarefa("Enviar relatório", "08/04/2025", false),
-            Tarefa("Enviar teste 1", "08/04/2025", false),
-            Tarefa("Enviar teste 1", "08/04/2025", false),
-            Tarefa("Enviar teste 1", "08/04/2025", false),
-            Tarefa("Enviar teste 1", "08/04/2025", false),
-            Tarefa("Enviar teste 1", "08/04/2025", false)
-        )
-
-        val adapter = TarefaAdapter(tarefas)
-        recyclerView.adapter = adapter
+        carregarTarefasDoFirebase()
 
         icon_user.setOnClickListener {
             telaPrincipal()
         }
 
-        icon_lista.setOnClickListener{
+        icon_lista.setOnClickListener {
             telaLista()
         }
 
@@ -56,22 +50,53 @@ class TelaLista : AppCompatActivity() {
         }
     }
 
+    private fun carregarTarefasDoFirebase() {
+        val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("tarefas")
+            .whereEqualTo("usuarioId", usuarioId)
+            .get()
+            .addOnSuccessListener { resultado ->
+                tarefas.clear()
+                for (documento in resultado) {
+                    val titulo = documento.getString("titulo") ?: ""
+                    val dataTimestamp = documento.getTimestamp("data")?.toDate()
+                    val concluida = documento.getBoolean("concluida") ?: false
+                    val dataConcluidaTimestamp = documento.getTimestamp("dataConcluida")?.toDate()
+
+                    if (dataTimestamp != null) {
+                        val tarefa = Tarefa(
+                            titulo = titulo,
+                            data = dataTimestamp,
+                            concluida = concluida,
+                            dataConcluida = dataConcluidaTimestamp,
+                            id = documento.id
+                        )
+                        tarefas.add(tarefa)
+                    }
+                }
+                tarefaAdapter.notifyDataSetChanged()
+            }
+            .addOnFailureListener { e ->
+                Log.e("firebase", "Erro ao buscar tarefas: ${e.message}")
+            }
+    }
+
     private fun telaPrincipal() {
         val intent = Intent(this, TelaPrincipal::class.java)
         startActivity(intent)
-        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+        finish()
     }
 
     private fun telaLista() {
-//        val intent = Intent(this, TelaLista::class.java)
-//        startActivity(intent)
-//        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+        // já estamos nesta tela
     }
 
     private fun telaNovaTarefa() {
-//        val intent = Intent(this, TelaPrincipal::class.java)
-//        startActivity(intent)
-//        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+        val intent = Intent(this, TelaNovaTarefa::class.java)
+        startActivity(intent)
+        finish()
     }
 
     private fun iniciarComponentes() {

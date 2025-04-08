@@ -103,6 +103,7 @@ class FormCadastro : AppCompatActivity() {
             }
     }
 
+
     private fun iniciarComponentes() {
         edit_nome = findViewById(R.id.edit_nome)
         edit_email = findViewById(R.id.edit_email)
