@@ -5,7 +5,7 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".TelaNovaTarefa">
+    tools:context=".TelaGraficos">
 
     <View
         android:id="@+id/containerCabecalho"
@@ -22,50 +22,87 @@
         android:textSize="25sp"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:text="Nova tarefa"
+        android:text="Gráficos"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/containerCabecalho"
         />
 
-    <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
+    <Spinner
+        android:id="@+id/spinnerAno"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="16dp"
+        android:layout_marginTop="10dp"
+        android:padding="7dp"
+        android:layout_margin="10dp"
+        android:background="@drawable/borda_spinner"
         app:layout_constraintTop_toBottomOf="@id/containerCabecalho"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-        <EditText
-            android:id="@+id/inputTitulo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Título da tarefa"
-            android:inputType="text" />
-
-        <EditText
-            android:id="@+id/inputDataHora"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Selecione data e hora"
-            android:focusable="false"
-            android:clickable="true" />
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/bt_salvar"
-        style="@style/Button"
-        android:text="Salvar tarefa"
-        android:layout_marginBottom="20dp"
+    <ScrollView
+        android:id="@+id/scrollGraficos"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/spinnerAno"
         app:layout_constraintBottom_toTopOf="@id/containerNavbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textBarChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Tarefas concluídas por mês"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="0dp"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"
+                app:layout_constraintTop_toBottomOf="@id/textBarChart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:id="@+id/textPieChart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textStyle="bold"
+                android:text="Tarefas Concluídas X Pendentes"
+                android:layout_marginTop="16dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/barChart"/>
+
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pieChart"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                app:layout_constraintTop_toBottomOf="@id/textPieChart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+
 
     <View
         android:id="@+id/containerNavbar"
@@ -103,7 +140,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_add"
             android:layout_gravity="center"
-            app:tint="@color/gray" />
+            app:tint="@color/white" />
 
         <ImageView
             android:id="@+id/iconeGrafico"
@@ -112,7 +149,7 @@
             android:layout_weight="1"
             android:src="@drawable/ic_graph"
             android:layout_gravity="center"
-            app:tint="@color/white" />
+            app:tint="@color/gray" />
 
         <ImageView
             android:id="@+id/iconePerfil"

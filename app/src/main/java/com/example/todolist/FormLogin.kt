@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.todolist.databinding.ActivityFormLoginBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
+import androidx.appcompat.app.AppCompatDelegate
 
 class FormLogin : AppCompatActivity() {
 
@@ -26,6 +27,10 @@ class FormLogin : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
+
         binding = ActivityFormLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 

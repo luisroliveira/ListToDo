@@ -118,40 +118,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         />
 
-    <ImageView
-        android:id="@+id/iconeCheck"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_check"
-        android:layout_marginStart="30dp"
-        android:layout_marginBottom="10dp"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
-        app:layout_constraintStart_toStartOf="@+id/containerNavbar"
-        />
+    <LinearLayout
+        android:id="@+id/linearNavBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="bottom"
+        android:paddingBottom="10dp"
+        android:layout_alignParentBottom="true"
+        app:layout_constraintTop_toTopOf="@id/containerNavbar"
+        app:layout_constraintBottom_toBottomOf="@id/containerNavbar"
+        >
 
-    <ImageView
-        android:id="@+id/iconeAdd"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_add"
-        android:layout_marginBottom="10dp"
-        app:tint="@color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+        <ImageView
+            android:id="@+id/iconeCheck"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_check"
+            android:layout_gravity="center"
+            app:tint="@color/white" />
 
-    <ImageView
-        android:id="@+id/iconePerfil"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:src="@drawable/ic_user"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="10dp"
-        app:tint="@color/gray"
-        app:layout_constraintBottom_toBottomOf="@+id/containerNavbar"
-        app:layout_constraintEnd_toEndOf="@+id/containerNavbar"
-        />
+        <ImageView
+            android:id="@+id/iconeAdd"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_add"
+            android:layout_gravity="center"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/iconeGrafico"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_graph"
+            android:layout_gravity="center"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/iconePerfil"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_user"
+            android:layout_gravity="center"
+            app:tint="@color/gray" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

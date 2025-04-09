@@ -6,6 +6,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -21,6 +22,7 @@ class TelaPrincipal : AppCompatActivity() {
     private lateinit var icon_user: ImageView
     private lateinit var icon_add: ImageView
     private lateinit var icon_lista: ImageView
+    private lateinit var icon_graficos: ImageView
 
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
     private lateinit var usuarioId: String
@@ -28,6 +30,9 @@ class TelaPrincipal : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_principal)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+
         supportActionBar?.hide()
 
         iniciarComponentes()
@@ -37,6 +42,22 @@ class TelaPrincipal : AppCompatActivity() {
             val intent = Intent(this, FormLogin::class.java)
             startActivity(intent)
             finish()
+        }
+
+        icon_user.setOnClickListener {
+            telaPrincipal()
+        }
+
+        icon_lista.setOnClickListener{
+            telaLista()
+        }
+
+        icon_add.setOnClickListener {
+            telaNovaTarefa()
+        }
+
+        icon_graficos.setOnClickListener {
+            telaGraficos()
         }
     }
 
@@ -59,18 +80,14 @@ class TelaPrincipal : AppCompatActivity() {
                     }
                 }
             )
-        }
 
-        icon_user.setOnClickListener {
-            telaPrincipal()
-        }
 
-        icon_lista.setOnClickListener{
-            telaLista()
         }
-
-        icon_add.setOnClickListener {
-            telaNovaTarefa()
+        else {
+            val intent = Intent(this, FormLogin::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
         }
     }
 
@@ -88,6 +105,11 @@ class TelaPrincipal : AppCompatActivity() {
         startActivity(intent)
     }
 
+    private fun telaGraficos() {
+        val intent = Intent(this, TelaGraficos::class.java)
+        startActivity(intent)
+    }
+
     private fun iniciarComponentes() {
         email_user = findViewById(R.id.textEmailUser)
         nome_user = findViewById(R.id.textNomeUser)
@@ -95,5 +117,6 @@ class TelaPrincipal : AppCompatActivity() {
         icon_lista = findViewById(R.id.iconeCheck)
         icon_add = findViewById(R.id.iconeAdd)
         icon_user = findViewById(R.id.iconePerfil)
+        icon_graficos = findViewById(R.id.iconeGrafico)
     }
 }

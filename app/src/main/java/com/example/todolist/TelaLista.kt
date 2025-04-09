@@ -21,12 +21,14 @@ import java.util.*
 import android.widget.AdapterView
 import android.app.DatePickerDialog
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatDelegate
 
 class TelaLista : AppCompatActivity() {
 
     private lateinit var icon_user: ImageView
     private lateinit var icon_add: ImageView
     private lateinit var icon_lista: ImageView
+    private lateinit var icon_graficos: ImageView
     private lateinit var switchFiltro: Switch
     private lateinit var layoutFiltro: LinearLayout
     private lateinit var btnSelecionarData: Button
@@ -38,11 +40,12 @@ class TelaLista : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var tarefaAdapter: TarefaAdapter
     private val tarefas = mutableListOf<Tarefa>()
-    private val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_tela_lista)
+
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
 
         supportActionBar?.hide()
         iniciarComponentes()
@@ -70,6 +73,10 @@ class TelaLista : AppCompatActivity() {
 
         icon_add.setOnClickListener {
             telaNovaTarefa()
+        }
+
+        icon_graficos.setOnClickListener {
+            telaGraficos()
         }
 
         switchFiltro.setOnCheckedChangeListener { _, isChecked ->
@@ -191,15 +198,32 @@ class TelaLista : AppCompatActivity() {
         // já estamos nesta tela
     }
 
+    private fun telaGraficos() {
+        val intent = Intent(this, TelaGraficos::class.java)
+        startActivity(intent)
+    }
+
     private fun telaNovaTarefa() {
         val intent = Intent(this, TelaNovaTarefa::class.java)
         startActivity(intent)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        val usuario = FirebaseAuth.getInstance().currentUser
+        if (usuario == null) {
+            val intent = Intent(this, FormLogin::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun iniciarComponentes() {
         icon_lista = findViewById(R.id.iconeCheck)
         icon_add = findViewById(R.id.iconeAdd)
         icon_user = findViewById(R.id.iconePerfil)
+        icon_graficos = findViewById(R.id.iconeGrafico)
         switchFiltro = findViewById(R.id.switchFiltro)
         layoutFiltro = findViewById(R.id.layoutFiltro)
         btnSelecionarData = findViewById(R.id.btnSelecionarData)
