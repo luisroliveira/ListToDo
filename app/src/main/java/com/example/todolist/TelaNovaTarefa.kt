@@ -8,6 +8,7 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -52,23 +53,25 @@ class TelaNovaTarefa : AppCompatActivity() {
         btnSalvar.setOnClickListener {
             val titulo = inputTitulo.text.toString().trim()
             val data = dataSelecionada
+            val usuarioId = FirebaseAuth.getInstance().currentUser?.uid
 
-            if (titulo.isNotEmpty() && data != null) {
+            if (titulo.isNotEmpty() && data != null && usuarioId != null) {
                 val novaTarefa = Tarefa(
                     titulo = titulo,
                     data = data,
                     concluida = false,
                     dataConcluida = null
                 )
-                salvarTarefa(novaTarefa)
+                salvarTarefa(novaTarefa, usuarioId)
                 telaLista()
+            } else {
+                Toast.makeText(this, "Preencha todos os campos e esteja logado.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private fun salvarTarefa(tarefa: Tarefa) {
+    private fun salvarTarefa(tarefa: Tarefa, usuarioId: String) {
         val db = FirebaseFirestore.getInstance()
-        val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: return
 
         val dadosTarefa = hashMapOf(
             "titulo" to tarefa.titulo,
@@ -113,17 +116,15 @@ class TelaNovaTarefa : AppCompatActivity() {
     private fun telaPrincipal() {
         val intent = Intent(this, TelaPrincipal::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun telaLista() {
         val intent = Intent(this, TelaLista::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun telaNovaTarefa() {
-        // Atual não faz nada, pois já está na tela
+        // Já estamos nessa tela
     }
 
     private fun iniciarComponentes() {

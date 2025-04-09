@@ -1,5 +1,6 @@
 package com.example.todolist
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -29,6 +31,7 @@ class TelaLista : AppCompatActivity() {
 
         supportActionBar?.hide()
         iniciarComponentes()
+        configurarFirebase()
 
         recyclerView = findViewById(R.id.minhaRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
@@ -50,6 +53,7 @@ class TelaLista : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     private fun carregarTarefasDoFirebase() {
         val usuarioId = FirebaseAuth.getInstance().currentUser?.uid ?: return
         val db = FirebaseFirestore.getInstance()
@@ -83,10 +87,17 @@ class TelaLista : AppCompatActivity() {
             }
     }
 
+    private fun configurarFirebase() {
+        val db = FirebaseFirestore.getInstance()
+        val settings = FirebaseFirestoreSettings.Builder()
+            .setPersistenceEnabled(true)
+            .build()
+        db.firestoreSettings = settings
+    }
+
     private fun telaPrincipal() {
         val intent = Intent(this, TelaPrincipal::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun telaLista() {
@@ -96,7 +107,6 @@ class TelaLista : AppCompatActivity() {
     private fun telaNovaTarefa() {
         val intent = Intent(this, TelaNovaTarefa::class.java)
         startActivity(intent)
-        finish()
     }
 
     private fun iniciarComponentes() {

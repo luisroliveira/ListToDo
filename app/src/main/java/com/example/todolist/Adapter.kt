@@ -43,7 +43,7 @@ class TarefaAdapter(private val listaTarefas: MutableList<Tarefa>) :
         val formatoCompleto = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
         holder.data.text = formatoCompleto.format(tarefa.data)
 
-        holder.checkbox.setOnCheckedChangeListener(null) // evita bug ao reaproveitar view
+        holder.checkbox.setOnCheckedChangeListener(null)
         holder.checkbox.isChecked = tarefa.concluida
 
         holder.iconeDelete.setOnClickListener {

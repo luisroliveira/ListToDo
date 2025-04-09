@@ -75,21 +75,17 @@ class TelaPrincipal : AppCompatActivity() {
     }
 
     private fun telaPrincipal() {
-//        val intent = Intent(this, TelaPrincipal::class.java)
-//        startActivity(intent)
-//        finish() // opcional, para não voltar à tela de login com o botão "voltar"
+        // Já estamos nessa tela
     }
 
     private fun telaLista() {
         val intent = Intent(this, TelaLista::class.java)
         startActivity(intent)
-        finish() // opcional, para não voltar à tela de login com o botão "voltar"
     }
 
     private fun telaNovaTarefa() {
         val intent = Intent(this, TelaNovaTarefa::class.java)
         startActivity(intent)
-        finish() // opcional, para não voltar à tela de login com o botão "voltar"
     }
 
     private fun iniciarComponentes() {
