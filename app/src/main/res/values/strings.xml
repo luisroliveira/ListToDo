@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">ToDoList</string>
+    <string-array name="opcoes_granularidade">
+        <item>Diário</item>
+        <item>Mensal</item>
+        <item>Anual</item>
+    </string-array>
 </resources>
