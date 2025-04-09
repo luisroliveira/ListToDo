@@ -6,6 +6,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.CheckBox
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
@@ -15,6 +16,14 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
+import androidx.work.WorkManager
+import androidx.work.Data
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.ExistingWorkPolicy
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.PeriodicWorkRequestBuilder
+import com.example.todolist.worker.ToDoReminderWorker
 
 class TelaNovaTarefa : AppCompatActivity() {
 
@@ -25,9 +34,12 @@ class TelaNovaTarefa : AppCompatActivity() {
     private lateinit var inputTitulo: EditText
     private lateinit var inputDataHora: EditText
     private lateinit var btnSalvar: Button
+    private lateinit var cbNotify: CheckBox
 
     private var dataSelecionada: Date? = null
     private val formato = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault())
+
+    private val workManager = WorkManager.getInstance(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -74,6 +86,9 @@ class TelaNovaTarefa : AppCompatActivity() {
                 telaLista()
             } else {
                 Toast.makeText(this, "Preencha todos os campos e esteja logado.", Toast.LENGTH_SHORT).show()
+            }
+            if(cbNotify.isChecked){
+                scheduleReminder(24, TimeUnit.HOURS, titulo)
             }
         }
     }
@@ -159,5 +174,40 @@ class TelaNovaTarefa : AppCompatActivity() {
         inputTitulo = findViewById(R.id.inputTitulo)
         inputDataHora = findViewById(R.id.inputDataHora)
         btnSalvar = findViewById(R.id.bt_salvar)
+        cbNotify = findViewById(R.id.wishNotif)
     }
+
+
+    private fun scheduleReminder(duration: Long, unit: TimeUnit, taskName: String) {
+        val data = Data.Builder()
+        data.putString(ToDoReminderWorker.nameKey, taskName)
+
+        val workRequestBuilder = PeriodicWorkRequestBuilder<ToDoReminderWorker>(duration, unit)
+//            .setInitialDelay(5, TimeUnit.SECONDS)
+            .setInputData(data.build())
+            .build()
+
+        workManager.enqueueUniquePeriodicWork(
+            taskName,
+            ExistingPeriodicWorkPolicy.UPDATE,
+            workRequestBuilder
+        )
+
+//        val workRequestBuilder = OneTimeWorkRequestBuilder<ToDoReminderWorker>()
+//            .setInitialDelay(5, TimeUnit.SECONDS)
+//            .setInputData(data.build())
+//            .build()
+//
+//        workManager.enqueueUniqueWork(
+//            taskName,
+//            ExistingWorkPolicy.REPLACE,
+//            workRequestBuilder
+//        )
+
+//        Log.d("WMInfo",workManager.getWorkInfosForUniqueWorkLiveData(taskName).toString())
+//        workManager.cancelUniqueWork(taskName)
+
+    }
+
+
 }

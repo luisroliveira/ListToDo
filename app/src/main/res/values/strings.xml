@@ -5,4 +5,6 @@
         <item>Mensal</item>
         <item>Anual</item>
     </string-array>
+    <string name="wish_to_be_notified">Desejo ser notificado a cada 24h</string>
+    <string name="remember_to_finish">Lembre de finalizar a tarefa %s.</string>
 </resources>
