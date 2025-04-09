@@ -20,7 +20,7 @@ data class Tarefa(
     val id: String? = null
 )
 
-class TarefaAdapter(private val listaTarefas: MutableList<Tarefa>) :
+class TarefaAdapter(private val listaTarefas: MutableList<Tarefa>, private val onTarefaAlterada: () -> Unit) :
     RecyclerView.Adapter<TarefaAdapter.TarefaViewHolder>() {
 
     class TarefaViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -73,6 +73,7 @@ class TarefaAdapter(private val listaTarefas: MutableList<Tarefa>) :
                 db.collection("tarefas").document(id)
                     .update(tarefaAtualizada)
                     .addOnSuccessListener {
+                        onTarefaAlterada()
                         // Log.d("firebase", "Tarefa atualizada com sucesso")
                     }
                     .addOnFailureListener {

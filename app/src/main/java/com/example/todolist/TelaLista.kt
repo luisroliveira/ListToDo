@@ -53,7 +53,9 @@ class TelaLista : AppCompatActivity() {
 
         recyclerView = findViewById(R.id.minhaRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        tarefaAdapter = TarefaAdapter(tarefas)
+        tarefaAdapter = TarefaAdapter(tarefas) {
+            carregarTarefasDoFirebase()
+        }
         recyclerView.adapter = tarefaAdapter
 
         carregarTarefasDoFirebase()
@@ -131,6 +133,7 @@ class TelaLista : AppCompatActivity() {
                         }
                     }
                 }
+                tarefas.sortWith(compareBy<Tarefa> { it.concluida }.thenBy { it.data })
                 tarefaAdapter.notifyDataSetChanged()
             }
             .addOnFailureListener { e ->
